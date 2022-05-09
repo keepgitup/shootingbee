@@ -4,16 +4,10 @@
 //3. 射擊(up) 敵機消失(或再出現?)
 //4. 蜜蜂異動後重劃 函數排列
 
-var canvasDimension = { width: 200, height: 200, origin: 0 };
+
 //------------------0. 前置----------------------
 
-var bee = {
-    size: 10,
-    begin: [{ x: 100, y: 170 }],
-    direction: { x: -10, y: 0 },
-    // direction2: { x: 1, y: 0 }
 
-};
 // 敵機:陣列濃縮
 
 // for (const Id of flt.Id) {
@@ -36,10 +30,12 @@ var fltDetail = [];
 var dx = 10;
 var dy = 10;
 // var newFltDetail = [];
-
+var beeDistance = 14;
 var number;
 var spaceNumber = 5;
 var fltInterval;
+var canvasDimension = { width: 200, height: 200, origin: 0 };
+var beeDetail = [];
 var newScore;
 // var flyCopy = {
 //     // size: 8,
@@ -49,23 +45,33 @@ var newScore;
 
 // shootPlay();
 
-var beeDetail = [];
 
 
 window.onload = onPageLoaded();
 
 function drawNewBee() {
-
-    var bee = {
-        size: 1,
-        begin: [{ x: 100, y: 170 }],
-        direction: { x: -10, y: 0 },
-        // direction2: { x: 1, y: 0 }
+    for (var i = 0; i < 1; i++) {
+        let bee = {
+            size: 1,
+            begin: { x: i * gridCount, y: 17 * gridCount },
+            direction: { x: i + 1, y: 0 },
+            location: i,
+            // direction2: { x: 1, y: 0 }
+        };
+        beeDetail.push(bee);
+        // ctx.clearRect(bee.begin[0].x, bee.begin[0].y, gridCount, gridCount);
+        // beeDetail[i].location = i * gridCount + beeDistance;
+        console.log("bee", bee);
+        console.log("beeDetail", beeDetail[0]);
     };
-    beeDetail.push(bee);
-    // ctx.clearRect(bee.begin[0].x, bee.begin[0].y, gridCount, gridCount);
-    // ctx.fillStyle = "yellow";
-    console.log("bee.begin.x", bee.begin[0].x);
+    beeDetail[0].location = 175,
+
+        // beeDetail[i].size = 3;
+        console.log("beeDetail[0].location", beeDetail[0].location);
+    console.log("beeDetail[0].size)", beeDetail[0].size);
+    //完全無法列印
+    // console.log("beeDetail[i].size)", beeDetail[i].size);
+
 }
 
 
@@ -74,28 +80,22 @@ function fltPic() {
 
     for (var i = 0; i < 8; i++) {
         let flybox = {
-            // size: 8,
-            // 這裡就是 數值 不用想到陣列取值 過於複雜
-            Id: i,
-            // Id: [1, 2, 3, 4, 5, 6, 7, 8],
-            begin: { x: i * 3 * gridCount, y: 2 * gridCount },
-            // location: [0, 3, 6, 9, 12, 15, 18, 21],
-            location: i,
-            // location: i * 3
-            // location: [i * 3]
-        }
-
-        console.log("flybox", flybox);
-
+                // size: 8,
+                // 這裡就是 數值 不用想到陣列取值 過於複雜
+                Id: i,
+                // Id: [1, 2, 3, 4, 5, 6, 7, 8],
+                begin: { x: i * 3 * gridCount, y: 2 * gridCount },
+                // location: [0, 3, 6, 9, 12, 15, 18, 21],
+                location: i,
+                // location: i * 3
+                // location: [i * 3]
+            }
+            // console.log("flybox", flybox);
         fltDetail.push(flybox);
-
         fltDetail[i].location = i * gridCount * spaceNumber + 1;
 
 
     };
-
-
-
     // fltDetail[0].location = 0,
     console.log("fltDetail[0].location = 0", fltDetail[0].location);
     // fltDetail[1].location = 60,
@@ -111,9 +111,6 @@ function fltPic() {
 }
 //----------------1. 畫布 格線 蜜蜂--------------
 // console.log("fltDetail", fltDetail);
-
-
-
 function allPics() {
 
     // var newflts = fltPic();
@@ -131,7 +128,6 @@ function allPics() {
     for (var i = 0; i < canvasDimension.width / gridCount; i++) {
 
         // console.log("i是", i);
-
         for (var j = 0; j < canvasDimension.height / gridCount; j++) {
             ctx.fillStyle = "blue";
             // solution to solve the output sequence
@@ -139,17 +135,9 @@ function allPics() {
             // console.log("count", count);
             // console.log("output", outPut);
             // count = count + 1;
-
             //console.log(i, j);
-
             // }
-            // console.log("畫敵機前fltDetail", fltDetail);
-            for (var b = 0; b < beeDetail.size; b++) {
-                if (beeDetail.begin[0].x == 100 && beeDetail.begin[0].y == 170) {
-                    ctx.fillStyle = "yellow";
-                }
-                console.log("beeDetail", beeDetail);
-            }
+            console.log("畫敵機前fltDetail", fltDetail);
             //solution2
             // console.log("每格編號", outPut);
             // console.log("i編號", i);
@@ -175,18 +163,23 @@ function allPics() {
                 }
 
             }
+            console.log("beeDetail", beeDetail);
+            // 出來就是undefined
+            // console.log("beeDetail[0].size)", beeDetail.size);
+            for (var b = 0; b < beeDetail[0].size; b++) {
+                if (beeDetail[0].location == number) {
+                    ctx.fillStyle = "yellow";
+                }
 
+            }
             // }
             //solution
             // outPut = outPut + "\n";
-
-
-
             ctx.fillRect(i * gridCount, j * gridCount, gridCount, gridCount);
-
-
         }
     }
+
+
 
     // }
     // }
@@ -205,13 +198,8 @@ function allPics() {
         // console.log("線第", i + "條");
 
     };
-
 }
-
-
-
-
-
+// }
 
 // 測試用
 // function test() {
@@ -234,9 +222,8 @@ function mapPic(a1, a2) {
 
 function shootPlay() {
     fltPic();
-    allPics();
     drawNewBee();
-
+    allPics();
     updateScore();
 }
 
@@ -259,21 +246,22 @@ function onPageLoaded() {
 
 function keydown(event) {
 
-    var originX = bee.direction.x;
+    var originX = beeDetail[0].direction.x;
     //變數不要直接寫負號
     // var -originX = bee.direction.x;
-    var originY = bee.direction.y;
+    var originY = beeDetail[0].direction.y;
 
     if (event.keyCode === 37) {
         console.log("按了<--鍵");
-        bee.direction.x = originX;
-        bee.direction.y = originY;
+        beeDetail[0].direction.x = originX;
+        beeDetail[0].direction.y = originY;
     } else if (event.keyCode === 39) {
         console.log("按了-->鍵");
-        (bee.direction.x) = originX;
-        bee.direction.y = originY;
+        (beeDetail[0].direction.x) = originX;
+        beeDetail[0].direction.y = originY;
     }
-
+    //也確認 是否beedetail有在按鍵事件裡
+    console.log("beeDetail with event", beeDetail);
 }
 
 
@@ -282,16 +270,16 @@ function keydown(event) {
 //originalway
 function moveBee() {
     var newGrid = {
-            x: bee.begin[0].x + bee.direction.x,
+            x: beeDetail[0].begin.x + beeDetail[0].direction.x,
             //左右暫時不用
-            // y: bee.begin[0].y + bee.direction.y
+            y: beeDetail[0].begin[0].y + beeDetail[0].direction.y
         }
         // pressDown(e);
 
-    bee.begin.unshift(newGrid);
+    beeDetail[0].begin.unshift(newGrid);
     //
-    if (bee.begin[0].length > bee.size) {
-        bee.begin[0].pop(newGrid);
+    if (beeDetail[0].begin.length > beeDetail[0].size) {
+        beeDetail[0].begin.pop(newGrid);
     }
 
 };
@@ -308,7 +296,7 @@ function updateScore(newScore) {
     if (fltInterval) {
         clearInterval(fltInterval);
     }
-    fltInterval = setInterval(moveBee, 1000 / level);
+    // fltInterval = setInterval(moveBee, 1000 / level);
     score += 1;
 
 }
